@@ -284,6 +284,14 @@ ostream& operator<<(ostream& out, Film f)
 	out << "Pret bilet:" << f.pret << endl;
 	out << "Durata filmului:" << f.durata << endl;
 	out << "Id-ul filmului:" << f.id << endl;
+	out << "Rating: ";
+	if (f.rating != nullptr && f.numarSpectatori > 0)
+	{
+		for (int i = 0; i < f.numarSpectatori; i++)
+		{
+			out << f.rating[i] << " " << endl;
+		}
+	}
 	return out;
 }
 
