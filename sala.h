@@ -21,7 +21,7 @@ public:
 	Sala() :idSala(nrSali++)
 	{
 		this->nume = new char[strlen("N/A") + 1];
-		strcpy_s(this->nume, 1, "N/A");
+		strcpy_s(this->nume, 4, "N/A");
 		this->nrLocuri = 0;
 		this->locuri = nullptr;
 		this->sunetDolby = false;
@@ -34,7 +34,7 @@ public:
 	Sala(int idNouSala) :idSala(idNouSala)
 	{
 		this->nume = new char[strlen("N/A") + 1];
-		strcpy_s(this->nume, 1, "N/A");
+		strcpy_s(this->nume, 4, "N/A");
 		this->nrLocuri = 0;
 		this->locuri = nullptr;
 		this->sunetDolby = false;
@@ -45,7 +45,7 @@ public:
 	}
 
 	//constructor cu 8 parametri
-	Sala(int idNouSala, char* nume, int nrLocuri, int* locuri, bool sunetDolby, int iesiriUrgenta, int scauneVip, float marimeEcran) :idSala(idNouSala)
+	Sala(int idNouSala, const char* nume, int nrLocuri, int* locuri, bool sunetDolby, int iesiriUrgenta, int scauneVip, float marimeEcran) :idSala(idNouSala)
 	{
 		this->nume = new char[strlen(nume) + 1];
 		strcpy_s(this->nume, strlen(nume) + 1, nume);
@@ -117,8 +117,12 @@ public:
 	}
 
 	//supraincarcare operator matematic *
-	Sala operator*(float value) 
+	Sala operator*(int value) 
 	{
+		if (value < 0)
+		{
+			throw 500;
+		}
 		Sala copie = *this;
 		copie.marimeEcran *= value;
 		return copie;
@@ -301,6 +305,7 @@ public:
 	
 	friend ostream& operator<<(ostream&, Sala);
 	friend istream& operator>>(istream&, Sala&);
+	friend Sala operator*(int, Sala);
 };
 
 //supraincarcare operator <<
@@ -319,6 +324,7 @@ ostream& operator<<(ostream& out, Sala s)
 		{
 			out << s.locuri[i] << " ";
 		}
+		out << endl;
 	}
 	out << "Sunet Dolby: ";
 	if (s.GetSunetDolby() == true)
@@ -327,6 +333,7 @@ ostream& operator<<(ostream& out, Sala s)
 	}
 	else 
 		out << "Nu ";
+	out << endl;
 	out << "Iesiri urgenta: " << s.iesiriUrgenta << endl;
 	out << "Scaune VIP: " << s.scauneVip << endl;
 	out << "Marime ecran: " << s.marimeEcran << endl;
@@ -373,4 +380,12 @@ istream& operator>>(istream& in, Sala& s)
 	return in;
 }
 
+//supraincarcare operator matematic * (comutativitate)
+Sala operator*(int value, Sala s)
+{
+	s.marimeEcran *= value;
+	return s;
+}
+
 string Sala::tipCinema = "IMAX";
+int Sala::nrSali = 0;
