@@ -7,8 +7,8 @@ private:
 	const int id;
 	char* nume;
 	char* film;
-	char data[11];
-	char ora[6];
+	string data;
+	string ora;
 	int nrSala;
 	int nrBilete;
 	float* pret;
@@ -19,11 +19,11 @@ public:
 	Rezervare() :id(nrRezervari++)
 	{
 		this->nume = new char[strlen("N/A") + 1];
-		strcpy_s(this->nume, 1, "N/A");
+		strcpy_s(this->nume, 4, "N/A");
 		this->film = new char[strlen("N/A") + 1];
 		strcpy_s(this->film, 4, "N/A");
-		strcpy_s(this->data, 11, "01.01.2021");
-		strcpy_s(this->ora, 6, "00:00");
+		this->data = "01.01.2000";
+		this->ora = "00:00";
 		this->nrSala = 0;
 		this->nrBilete = 0;
 		this->pret = nullptr;
@@ -33,11 +33,11 @@ public:
 	Rezervare(int idNou) :id(idNou)
 	{
 		this->nume = new char[strlen("N/A") + 1];
-		strcpy_s(this->nume, 1, "N/A");
+		strcpy_s(this->nume, 4, "N/A");
 		this->film = new char[strlen("N/A") + 1];
 		strcpy_s(this->film, 4, "N/A");
-		strcpy_s(this->data, 11, "01.01.2021");
-		strcpy_s(this->ora, 6, "00:00");
+		this->data = "01.01.2000";
+		this->ora = "00:00";
 		this->nrSala = 0;
 		this->nrBilete = 0;
 		this->pret = nullptr;
@@ -45,14 +45,14 @@ public:
 	}
 
 	//constructor cu 8 parametri
-	Rezervare(int idNou, char* nume, char* film, char data[11], char ora[6], int nrSala, int nrBilete, float* pret) :id(idNou)
+	Rezervare(int idNou, const char* nume, const char* film, string data, string ora, int nrSala, int nrBilete, float* pret) :id(idNou)
 	{
 		this->nume = new char[strlen(nume) + 1];
 		strcpy_s(this->nume, strlen(nume) + 1, nume);
 		this->film = new char[strlen(film) + 1];
 		strcpy_s(this->film, strlen(film) + 1, film);
-		strcpy_s(this->data, strlen(data) + 1, data);
-		strcpy_s(this->ora, strlen(ora) + 1, ora);
+		this->data = data;
+		this->ora = ora;
 		this->nrSala = nrSala;
 		this->nrBilete = nrBilete;
 		this->pret = new float[nrBilete];
@@ -70,8 +70,8 @@ public:
 		strcpy_s(this->nume, strlen(r.nume) + 1, r.nume);
 		this->film = new char[strlen(r.film) + 1];
 		strcpy_s(this->film, strlen(r.film) + 1, r.film);
-		strcpy_s(this->data, strlen(r.data) + 1, r.data);
-		strcpy_s(this->ora, strlen(r.ora) + 1, r.ora);
+		this->data = r.data;
+		this->ora = r.ora;
 		this->nrSala = r.nrSala;
 		this->nrBilete = r.nrBilete;
 		this->pret = new float[r.nrBilete];
@@ -94,8 +94,8 @@ public:
 		strcpy_s(this->nume, strlen(r.nume) + 1, r.nume);
 		this->film = new char[strlen(r.film) + 1];
 		strcpy_s(this->film, strlen(r.film) + 1, r.film);
-		strcpy_s(this->data, strlen(r.data) + 1, r.data);
-		strcpy_s(this->ora, strlen(r.ora) + 1, r.ora);
+		this->data = r.data;
+		this->ora = r.ora;
 		this->nrSala = r.nrSala;
 		this->nrBilete = r.nrBilete;
 		this->pret = new float[r.nrBilete];
@@ -135,8 +135,12 @@ public:
 	}
 
 	//supraincarcare operator matematic +
-	Rezervare& operator+(int value)
+	Rezervare operator+(int value)
 	{
+		if (value < 0)
+		{
+			throw 500;
+		}
 		Rezervare copie = *this;
 		copie.nrSala += value;
 		return copie;
@@ -230,27 +234,33 @@ public:
 	}
 
 	//metoda de acces pentru data - obtinere valoare
-	char getData()
+	string getData()
 	{
-		return data[11];
+		return data;
 	}
 
 	//metoda de acces pentru data - modificare valoare
-	void setData()
+	void setData(string data)
 	{
-		strcpy_s(this->data, strlen(data) + 1, data);
+		if (data.length() > 0)
+		{
+			this->data = data;
+		}
 	}
 
 	//metoda de acces pentru ora - obtinere valoare
-	char getOra()
+	string getOra()
 	{
-		return ora[6];
+		return ora;
 	}
 
 	//metoda de acces pentru ora - modificare valoare
-	void setOra()
+	void setOra(string ora)
 	{
-		strcpy_s(this->ora, strlen(ora) + 1, ora);
+		if (ora.length() > 0)
+		{
+			this->ora = ora;
+		}
 	}
 
 	//metoda de acces pentru nume - obtinere valoare
@@ -289,6 +299,8 @@ public:
 
 	friend ostream& operator<<(ostream&, Rezervare);
 	friend istream& operator>>(istream&, Rezervare&);
+	friend Rezervare operator+(int, Rezervare);
+
 };
 
 //supraincarcare operator <<
@@ -339,13 +351,11 @@ istream& operator>>(istream& in, Rezervare& r)
 
 	cout << "Data: ";
 	in >> ws;
-	in.getline(buffer, 99);
-	strcpy_s(r.data, strlen(buffer) + 1, buffer);
+	getline(in, r.data);
 
 	cout << "Ora: ";
 	in >> ws;
-	in.getline(buffer, 99);
-	strcpy_s(r.ora, strlen(buffer) + 1, buffer);
+	getline(in, r.ora);
 
 	cout << "Numar sala: ";
 	in >> r.nrSala;
@@ -371,6 +381,13 @@ istream& operator>>(istream& in, Rezervare& r)
 		r.pret = nullptr;
 	}
 	return in;
+}
+
+//supraincarcare operator matematic + (comutativitate)
+Rezervare operator+(int value, Rezervare r)
+{
+	r.nrSala += value;
+	return r;
 }
 
 int Rezervare::nrRezervari = 1;
