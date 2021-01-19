@@ -7,55 +7,47 @@
 #include"card.h"
 using namespace std;
 
-
-
-
 int main()
 {
 	int optiune;
 	while (1)
 	{
-		cout << "\n             CINEMA BUCURESTI\n\n\n";
+		cout << "\n             CINEMA BUCURESTI\n\n";
 		cout << "\n   Optiune                 Descriere";
 		cout << "\n -----------------------------------------------------";
 		cout << "\n     [1]    |  EMITERE BILET                         |\n";
-		cout << "     [2]    |  SITUATIE LOCURI LIBERE                              |\n";
+		cout << "     [2]    |  SITUATIE LOCURI LIBERE                |\n";
 		cout << "     [3]    |  SITUATIE FILME        		     |\n";
-		cout << "     [4]    |  OPERATIUNI                              |\n";
+		cout << "     [4]    |  OPERATIUNI                            |\n";
 		cout << "     [0]    |  INCHIDE PROGRAM                       |\n";
 		cout << " ----------------------------------------------------- \n\n";
 		cout << "\n Alegeti o optiune din meniu: "; 
 		cin >> optiune;
 		switch (optiune) {
 		case 1:
-			
 			break;
 		case 2:
-			
 			break;
 		case 3:
-			
 			break;
 		case 4:
-			
 			break;
 		case 0:
 			exit(0);
 			break;
 		default:
 			cout << "\n Optiunea introdusa este gresita!\n";
-			cout << "\n\n Apasati tasta ENTER pentru a continua...";
 		}
 	}
 	return 0;
 	
-    cout << "----------- CLASA FILM -----------" << endl;
-	int rating[] = {10};
+ //   cout << "----------- CLASA FILM -----------" << endl;
+	//int rating[] = {10};
 	//Film f1;
 	//Film f2 = f1;
- //   Film f3(rating, "Greenland", "VIP", 17, 12.15, 90);
-	Film f4( "Creed", "Terra", 1, rating, 25.16, 105);
-    cout <<f4;
+	//Film f3(rating, "Greenland", "VIP", 17, 12.15, 90);
+	//Film f4(rating, "Creed", "Terra", 1, 25.16, 105);
+ //   cout << f4;
 	//f1.setSala("Gold");
 	//cout << f1.getSala() << endl;
 	//cout << f3.getSpectatori() << endl;
@@ -63,18 +55,18 @@ int main()
 	//cout << f1.getTip() << endl;
 	//Film::setTip("Drama");
 	//cout << f4.getTip() << endl;
-	////cout << f1 << f2 << f3;
+	//cout << f1 << f2 << f3;
 	//Film f5 = f1;
 	//cout << endl;
-	cout << "----------- CLASA CLIENT -----------" << endl;
-	int filmeVazute[] = { 7 };
-	Client c1;
-	Client c2 = c1;
-	Client c3(4,"ionut","no mail",1, filmeVazute, 1952);
-	Client c4(c3);
-	cout << c3 << c4;
-	
-	
+	//cout << "----------- CLASA CLIENT -----------" << endl;
+	//int filmeVazute[] = { 7 };
+	//Client c1;
+	//Client c2 = c1;
+	//Client c3(4,"ionut","no mail",1, filmeVazute, 1952);
+	//Client c4(c3);
+	//cout << c3 << c4;
+	//
+	//
 	//float vect[]{ 1100.0,700.0,2300.0,3000.0 };
 	//int vector[]{ 1100, 700, 2300, 3000 };
 	//float vect2[]{ 1100.0,700.0,2300.0,3000.0, 3200.0 };
@@ -222,5 +214,4 @@ int main()
 	//Sala s9;
 	//cin >> s9;
 	//cout << s9 << endl << endl;
-	
 }
